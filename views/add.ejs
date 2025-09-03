@@ -1,0 +1,92 @@
+<%- include('partials/header') %>
+<%- include('partials/nav') %>
+
+<div class="min-h-screen bg-gray-100 flex flex-col items-center px-4 py-6 sm:px-6 lg:px-8">
+    <!-- Page Heading -->
+    <h1 class="text-4xl font-bold text-gray-800 mb-10 mt-6">Add New Car</h1>
+
+    <!-- Form Container -->
+   <form enctype="multipart/form-data" action="/add" method="POST" 
+      class="bg-white p-6 rounded-xl shadow-md max-w-md w-full mx-auto sm:max-w-lg lg:max-w-xl">
+    
+    <!-- Username -->
+    <div class="mb-4">
+        <label for="Username" class="block text-gray-700 font-semibold mb-2">Your Name</label>
+        <input 
+            type="text" 
+            name="Username" 
+            id="Username" 
+            placeholder="ex: Mohammad Tousif" 
+            required 
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200"
+        >
+    </div>
+
+    <!-- Engine Number -->
+    <div class="mb-4">
+        <label for="car_no" class="block text-gray-700 font-semibold mb-2">Engine Number</label>
+        <input 
+            type="text" 
+            name="car_no" 
+            id="car_no" 
+            placeholder="ex: GA 04 X ABCD" 
+            required 
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200"
+        >
+    </div>
+
+    <!-- Last PUC Date -->
+    <div class="mb-4">
+        <label for="lastPUC" class="block text-gray-700 font-semibold mb-2">Last PUC Date</label>
+        <input 
+            type="date" 
+            name="lastPUC" 
+            id="lastPUC" 
+            required 
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200"
+        >
+    </div>
+
+    <!-- Phone Number -->
+    <div class="mb-4">
+        <label for="lastInsurance" class="block text-gray-700 font-semibold mb-2">Last Insurance Date</label>
+        <input 
+            type="date" 
+            name="lastInsurance" 
+            id="lastInsurance" 
+            required 
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200"
+        >
+    </div>
+    <div class="mb-4">
+        <label for="phonenumber" class="block text-gray-700 font-semibold mb-2">Phone Number</label>
+        <input 
+            type="number" 
+            name="phonenumber" 
+            id="phonenumber" 
+            required 
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200"
+        >
+    </div>
+
+    <!-- Optional Image Upload -->
+    <div class="mb-4 w-full flex justify-center">
+    <label for="image" 
+           class="w-full sm:w-11/12 flex flex-col items-center px-4 py-6 bg-white text-blue-600 rounded-lg shadow-lg border-2 border-dashed cursor-pointer hover:bg-gray-100 transition-colors duration-200">
+        <span class="text-gray-500 text-sm sm:text-base text-center">Click to upload image (optional)</span>
+        <input type="file" name="image" id="image" accept="image/*" class="hidden" />
+    </label>
+</div>
+
+    <!-- Submit Button -->
+    <button 
+        type="submit" 
+        class="w-full inline-flex items-center justify-center mt-4 px-6 py-3 bg-blue-600 text-white font-semibold shadow-md hover:bg-blue-700 hover:scale-105 transition-all duration-300 ease-in-out rounded-lg"
+    >
+        Add Car
+    </button>
+</form>
+
+</div>
+
+<%- include('partials/footer') %>

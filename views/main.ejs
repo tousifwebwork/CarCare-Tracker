@@ -1,0 +1,86 @@
+<%- include('partials/header') %>
+<%- include('partials/nav',{ activePage: activePage, isLoggedIn: isLoggedIn }) %>
+
+<div class="min-h-screen bg-gray-100 flex flex-col items-center px-4 py-6 sm:px-6 lg:px-8">
+
+    <!-- Page Heading -->
+    <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-6 mt-6 text-center">Car Details Dashboard</h1>
+
+   
+
+    <!-- Add New Car Button -->
+    <a href="/add"
+       class="mb-6 sm:mb-8 bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow hover:bg-blue-700 transition duration-200 text-center w-full sm:w-auto">
+        Add New Car
+    </a>
+
+    <!-- Cars List Container -->
+    <div class="w-full max-w-7xl grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+
+        <% if (cars.length===0) { %>
+            <div class="col-span-full text-center text-gray-500 font-medium text-lg sm:text-2xl">
+                No cars added yet.
+            </div>
+        <% } else { %>
+            <% cars.forEach(car => { %>
+                <div class="relative bg-white p-4 sm:p-5 rounded-xl shadow-md hover:shadow-xl 
+                            transform transition duration-300 hover:scale-105">
+
+
+                    <!-- Delete Button -->
+                    <button
+                        class="absolute top-4  right-4 text-red-500 hover:text-red-700 font-bold text-base sm:text-lg z-10"
+                        onclick="(async () => {
+                               if (confirm('Do You Want to Delete [<%= car.Username %>]')) {
+                            try {
+                                const res = await fetch('/main/delete/<%= car._id %>', { method: 'DELETE' });
+                                if (res.ok) {
+                                    this.parentElement.remove();
+                                    console.log('Car Deleted');
+                                } else {
+                                    alert('Failed to delete car');
+                                }
+                            } 
+                            catch(err) {
+                                console.error(err);
+                            }}
+                        })()">
+                        Delete
+                    </button>
+
+                    <!-- Details Button -->
+                    <button
+                        class="absolute top-12 right-4 text-blue-500 hover:text-blue-700 font-bold text-base sm:text-lg z-10"
+                        onclick="window.location.href='/detail/<%= car._id %>'">
+                        Details
+                    </button>
+
+                    <!-- Car Details -->
+                    <h2 class="text-2xl sm:text-3xl text-gray-700 mb-2 font-bold truncate">
+                        <%= car.Username %>
+                    </h2>
+                    <p class="text-gray-600 text-sm sm:text-lg break-words"><strong>Engine No:</strong> <%= car.car_no %></p>
+                    <p class="text-gray-600 text-sm sm:text-lg break-words"><strong>Last PUC Date:</strong> <%= car.lastPUC ? car.lastPUC.toISOString().split('T')[0] : 'N/A' %></p>
+                    <p class="text-gray-600 text-sm sm:text-lg break-words"><strong>Next PUC Date:</strong> <%= car.nextPUC ? car.nextPUC.toISOString().split('T')[0] : 'N/A' %></p>
+                    <p class="text-gray-600 text-sm sm:text-lg break-words"><strong>Last Insu. Date:</strong> <%= car.lastInsurance ? car.lastInsurance.toISOString().split('T')[0] : 'N/A' %></p>
+                    <p class="text-gray-600 text-sm sm:text-lg break-words"><strong>Next Insu. Date:</strong> <%= car.nextInsurance ? car.nextInsurance.toISOString().split('T')[0] : 'N/A' %></p>
+
+                    <% if (car.nextInsurance) { 
+                        const today=new Date(); 
+                        const diffTime=new Date(car.nextInsurance) - today; 
+                        const diffDays=Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+                    %>
+                        <p class="text-gray-600 text-sm sm:text-lg break-words"><strong>Policy Expired in:</strong> <span class="text-red-700"><%= diffDays>=0 ? diffDays : "Expired" %></span></p>
+                        <p class="text-gray-600 text-sm sm:text-lg break-words"><strong>Insurance Expired in:</strong> <span class="text-red-700"><%= diffDays>=0 ? diffDays : "Expired" %></span></p>
+                    <% } else { %>
+                        <p class="text-gray-600 text-sm sm:text-lg break-words"><strong>Policy Expired in:</strong> N/A</p>
+                        <p class="text-gray-600 text-sm sm:text-lg break-words"><strong>Insurance Expired in:</strong> N/A</p>
+                    <% } %>
+
+                </div>
+            <% }); %>
+        <% } %>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
