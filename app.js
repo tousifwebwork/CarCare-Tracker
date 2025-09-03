@@ -40,10 +40,7 @@ app.use((req, res, next) => {
 });
 
 // MongoDB connection
-mongoose.connect(DB_PATH, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect(DB_PATH)
 .then(()=> console.log("Database connected"))
 .catch(err => console.error("Database connection error:", err));
 
