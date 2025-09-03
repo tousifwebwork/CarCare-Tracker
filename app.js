@@ -1,8 +1,9 @@
 const express = require('express');
-const mongoose =  require('mongoose');
+const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
-const DB_PATH="mongodb+srv://root:root@tousif.ikbis15.mongodb.net/Car?retryWrites=true&w=majority&appName=tousif";
+
+const DB_PATH = process.env.DB_PATH || "mongodb+srv://root:root@tousif.ikbis15.mongodb.net/Car?retryWrites=true&w=majority&appName=tousif";
 
 const addRoutes = require('./routes/addRouter');
 const mainRoutes = require('./routes/mainRouter');
@@ -19,18 +20,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
-
+// MongoDB session store
 const store = new MongoDBStore({
     uri: DB_PATH,
     collection: 'sessions'
 });
 
+// Session middleware
 app.use(session({
     secret: 'yamurshid',
     resave: false,
     saveUninitialized: true,
-    store: store,
-    isLoggedIn:false
+    store: store
 }));
 
 app.use((req, res, next) => {
@@ -38,16 +39,16 @@ app.use((req, res, next) => {
   next();
 });
 
- 
-mongoose.connect(DB_PATH)
-.then(()=>{
-    console.log("Database connected");
+// MongoDB connection
+mongoose.connect(DB_PATH, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 })
-.catch((err)=>{
-    console.error("Database connection error:", err);
-});
-app.use('/login', loginRouter);
+.then(()=> console.log("Database connected"))
+.catch(err => console.error("Database connection error:", err));
 
+// Routes
+app.use('/login', loginRouter);
 app.use('/add', addRoutes);
 app.use("/detail", detailRoutes);
 app.use("/aboutme", aboutmeRoutes);
@@ -56,23 +57,22 @@ app.use("/main", mainRoutes);
 app.use("/termsCondition", termsRouter);
 app.use("/register", registerRouter);
 
-app.get('/', (req, res) => {
-  res.redirect('/login');
-});
+// Home redirect
+app.get('/', (req, res) => res.redirect('/login'));
 
+// Logout
 app.get('/logout', (req, res) => {
-    req.session.destroy(err =>{
-    if(err) {
-      console.log(err);
-    }
-    else{
-      res.redirect('/login');
-      console.log("Logged out successfully");
-    }
-  });
+    req.session.destroy(err => {
+        if(err) console.log(err);
+        else {
+            res.redirect('/login');
+            console.log("Logged out successfully");
+        }
+    });
 });
 
-const PORT = 4000;
-app.listen(PORT,"0.0.0.0", () => {
-    console.log(`Server is running on port ${PORT}`);
-}); 
+// Server
+const port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", () => {
+    console.log(`Server is running on port ${port}`);
+});
