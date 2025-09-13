@@ -7,8 +7,9 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js && npx tailwindcss -i ./src/input.css -o ./public/output.css"
-  },
+  "start": "node app.js",
+  "dev": "nodemon app.js && npx tailwindcss -i ./src/input.css -o ./public/output.css"
+},
   "dependencies": {
     "@tailwindcss/cli": "^4.1.12",
     "bcrypt": "^6.0.0",
