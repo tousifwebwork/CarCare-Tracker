@@ -1,0 +1,64 @@
+<nav class="bg-gray-800 text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center">
+      
+      <!-- Logo / Brand -->
+      <div class="flex-shrink-0 text-xl font-bold">
+        CarCare-Taker
+      </div>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex space-x-4">
+        <% if (!isLoggedIn) { %>
+          <a href="/login" class="px-3 py-2 rounded-md <%= activePage==='login' ? 'text-yellow-400 bg-gray-700' : 'hover:text-yellow-400 hover:bg-gray-700' %> transition-colors duration-200">Login</a>
+                    <a href="/myproject" class="px-3 py-2 rounded-md <%= activePage==='myproject' ? 'text-yellow-400 bg-gray-700' : 'hover:text-yellow-400 hover:bg-gray-700' %> transition-colors duration-200">My Project</a>
+          <a href="/aboutme" class="px-3 py-2 rounded-md <%= activePage==='Aboutme' ? 'text-yellow-400 bg-gray-700' : 'hover:text-yellow-400 hover:bg-gray-700' %> transition-colors duration-200">About Me</a>
+          
+
+        <% } else { %>
+          <a href="/aboutme" class="px-3 py-2 rounded-md <%= activePage==='Aboutme' ? 'text-yellow-400 bg-gray-700' : 'hover:text-yellow-400 hover:bg-gray-700' %> transition-colors duration-200">About Me</a>
+          <a href="/add" class="px-3 py-2 rounded-md <%= activePage==='add' ? 'text-yellow-400 bg-gray-700' : 'hover:text-yellow-400 hover:bg-gray-700' %> transition-colors duration-200">Add</a>
+          <a href="/main" class="px-3 py-2 rounded-md <%= activePage==='main' ? 'text-yellow-400 bg-gray-700' : 'hover:text-yellow-400 hover:bg-gray-700' %> transition-colors duration-200">Main</a>
+          <a href="/myproject" class="px-3 py-2 rounded-md <%= activePage==='myproject' ? 'text-yellow-400 bg-gray-700' : 'hover:text-yellow-400 hover:bg-gray-700' %> transition-colors duration-200">My Project</a>
+          <a href="#" 
+            onclick="if(confirm('Do you want to log out?')) { window.location.href='/logout'; }"  
+            class="px-3 py-2 rounded-md hover:text-yellow-400 hover:bg-gray-700 transition-colors duration-200">
+            Logout
+          </a>
+        <% } %>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden flex items-center">
+        <button id="mobile-menu-button" class="focus:outline-none">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-gray-800 px-2 pt-2 pb-3 space-y-1">
+    <% if (!isLoggedIn) { %>
+      <a href="/aboutme" class="block px-3 py-2 rounded-md <%= activePage==='Aboutme' ? 'text-yellow-400 bg-gray-700' : 'hover:text-yellow-400 hover:bg-gray-700' %> transition-colors duration-200">About Me</a>
+      <a href="/login" class="block px-3 py-2 rounded-md <%= activePage==='login' ? 'text-yellow-400 bg-gray-700' : 'hover:text-yellow-400 hover:bg-gray-700' %> transition-colors duration-200">Login</a>
+      <a href="/myproject" class="block px-3 py-2 rounded-md <%= activePage==='myproject' ? 'text-yellow-400 bg-gray-700' : 'hover:text-yellow-400 hover:bg-gray-700' %> transition-colors duration-200">My Project</a>
+    <% } else { %>
+      <a href="/aboutme" class="block px-3 py-2 rounded-md <%= activePage==='Aboutme' ? 'text-yellow-400 bg-gray-700' : 'hover:text-yellow-400 hover:bg-gray-700' %> transition-colors duration-200">About Me</a>
+      <a href="/add" class="block px-3 py-2 rounded-md <%= activePage==='add' ? 'text-yellow-400 bg-gray-700' : 'hover:text-yellow-400 hover:bg-gray-700' %> transition-colors duration-200">Add</a>
+      <a href="/main" class="block px-3 py-2 rounded-md <%= activePage==='main' ? 'text-yellow-400 bg-gray-700' : 'hover:text-yellow-400 hover:bg-gray-700' %> transition-colors duration-200">Main</a>
+      <a href="/myproject" class="block px-3 py-2 rounded-md <%= activePage==='myproject' ? 'text-yellow-400 bg-gray-700' : 'hover:text-yellow-400 hover:bg-gray-700' %> transition-colors duration-200">My Project</a>
+      <a href="#" onclick="if(confirm('Do you want to log out?')) { window.location.href='/logout'; }" class="block px-3 py-2 rounded-md hover:text-yellow-400 hover:bg-gray-700 transition-colors duration-200">Logout</a>
+    <% } %>
+  </div>
+</nav>
+
+<script>
+  const btn = document.getElementById('mobile-menu-button');
+  const menu = document.getElementById('mobile-menu');
+  btn.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+  });
+</script>
